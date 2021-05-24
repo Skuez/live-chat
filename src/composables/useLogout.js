@@ -10,7 +10,6 @@ const logout = async () => {
     await auth.signOut();
   } catch (err) {
     error.value = err.message;
-    console.log(err.message);
   }
 };
 

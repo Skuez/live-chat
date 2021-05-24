@@ -20,9 +20,9 @@ export default {
 
     const handleLogout = async () => {
       await logout();
-      if (!error.value) {
+      /* if (!error.value) {
         console.log("user logged out");
-      }
+      } */
     };
 
     return { handleLogout, error, user };
