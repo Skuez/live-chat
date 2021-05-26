@@ -6,12 +6,20 @@ import { auth } from "../firebase/config";
 // auth guard
 const requireAuth = (to, from, next) => {
   let user = auth.currentUser;
-  console.log("current user in auth guard: ", user);
-  //console.log(to, from, next);
   if (!user) {
     next({ name: "Welcome" });
   } else {
     next();
+  }
+};
+
+// auth guard
+const isLoggedIn = (to, from, next) => {
+  let user = auth.currentUser;
+  if (!user) {
+    next();
+  } else {
+    next({ name: "Chatroom" });
   }
 };
 
@@ -20,6 +28,7 @@ const routes = [
     path: "/",
     name: "Welcome",
     component: Welcome,
+    beforeEnter: isLoggedIn,
   },
   {
     path: "/chatroom",

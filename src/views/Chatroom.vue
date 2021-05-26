@@ -1,7 +1,8 @@
 <template>
   <div class="chatroom container">
     <navbar />
-    <p>Chatroom</p>
+    <chat-window />
+    <new-chat-form />
   </div>
 </template>
 
@@ -9,10 +10,12 @@
 import { watchEffect } from "vue";
 import { useRouter } from "vue-router";
 import getUser from "../composables/getUser";
+import NewChatForm from "../components/NewChatForm.vue";
+import ChatWindow from "../components/ChatWindow.vue";
 
 import Navbar from "../components/Navbar.vue";
 export default {
-  components: { Navbar },
+  components: { Navbar, NewChatForm, ChatWindow },
   setup() {
     const router = useRouter();
     const { user } = getUser();
