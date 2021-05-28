@@ -4,6 +4,8 @@
       placeholder="Type a message and hit enter to send..."
       v-model="message"
       @keypress.enter.prevent="handleSubmit"
+      :disabled="toggleDisabled"
+      ref="textarea"
     ></textarea>
     <div class="error">{{ error }}</div>
   </form>
@@ -21,9 +23,13 @@ export default {
     const { addDoc, error } = useCollection("messages");
 
     const message = ref("");
-    const textarea = ref(false);
+    const toggleDisabled = ref(false);
+    const textarea = ref(null);
 
     const handleSubmit = async () => {
+      message.value = message.value.trim();
+      if (!message.value) return;
+      toggleDisabled.value = true;
       const chat = {
         user: user.value.displayName,
         message: message.value,
@@ -32,9 +38,11 @@ export default {
 
       await addDoc(chat);
       if (!error.value) message.value = "";
+      toggleDisabled.value = false;
+      textarea.value.focus();
     };
 
-    return { message, handleSubmit, error, textarea };
+    return { message, handleSubmit, error, toggleDisabled, textarea };
   },
 };
 </script>

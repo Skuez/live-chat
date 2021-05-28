@@ -7,9 +7,10 @@ const getCollection = (collection) => {
 
   let collectionRef = db.collection(collection).orderBy("createdAt");
 
-  const unsub = collectionRef.onSnapshot(
+  let unsub;
+
+  unsub = collectionRef.onSnapshot(
     (snap) => {
-      console.log("snapshot");
       let results = [];
       snap.docs.forEach((doc) => {
         doc.data().createdAt && results.push({ ...doc.data(), id: doc.id });
